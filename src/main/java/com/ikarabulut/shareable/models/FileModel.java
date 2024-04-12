@@ -1,17 +1,18 @@
 package com.ikarabulut.shareable.models;
 
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import java.util.UUID;
 
 @Entity
 public class FileModel {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false, insertable = false, unique = true)
+    private Long id;
+    private final UUID uuid = UUID.randomUUID();
     @NotNull
     private String name;
     @NotNull
@@ -22,8 +23,9 @@ public class FileModel {
     private String signature;
 
 
-    public Integer getId() { return this.id; }
-    public void setId(Integer id) { this.id = id; }
+    public Long getId() { return this.id; }
+
+    public UUID getUuid() { return this.uuid; }
 
     public String getName() { return this.name; }
     public void setName(String name) { this.name = name; }

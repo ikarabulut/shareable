@@ -2,6 +2,7 @@ package com.ikarabulut.shareable.models;
 
 
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotNull;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -11,10 +12,13 @@ public class FileModel {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
+    @NotNull
     private String name;
+    @NotNull
     private String description;
     private Boolean isMalware;
     private int ownedBy;
+    @NotNull
     private String signature;
 
 

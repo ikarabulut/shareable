@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 public class FileController {
@@ -33,6 +35,21 @@ public class FileController {
     public ResponseEntity<FileModel> listFile(@PathVariable("id") @Valid Long id) {
         FileModel file = this.fileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No file found with Id: " + id));
         return new ResponseEntity<>(file, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path="/files/{id}")
+    public ResponseEntity<FileModel> deleteFile(@PathVariable("id") @Valid Long id) {
+        Optional<FileModel> fileObj = this.fileRepository.findById(id);
+
+        if (fileObj.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        FileModel fileRecord = fileObj.get();
+
+        this.fileRepository.delete(fileRecord);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

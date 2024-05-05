@@ -1,6 +1,7 @@
 package com.ikarabulut.shareable.controllers;
 
 import com.ikarabulut.shareable.exceptions.ResourceNotFoundException;
+import com.ikarabulut.shareable.handlers.request.FileRequestHandler;
 import com.ikarabulut.shareable.models.FileModel;
 import com.ikarabulut.shareable.repository.FileRepository;
 import jakarta.validation.Valid;
@@ -18,9 +19,11 @@ public class FileController {
 
     @Autowired
     private FileRepository fileRepository;
+    private final FileRequestHandler requestHandler = new FileRequestHandler();
 
     @PostMapping(path="/files")
     public ResponseEntity<FileModel> createFile(@RequestBody @Valid FileModel fileModel) {
+        requestHandler.validateFileType(fileModel.getName());
         FileModel createdFile = this.fileRepository.save(fileModel);
         return new ResponseEntity<>(createdFile, HttpStatus.CREATED);
     }

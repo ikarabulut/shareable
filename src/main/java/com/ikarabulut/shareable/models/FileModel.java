@@ -3,6 +3,7 @@ package com.ikarabulut.shareable.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ public class FileModel {
     private Long id;
     private final UUID uuid = UUID.randomUUID();
     @NotNull
+    @Pattern(regexp = "^[^.]+\\.[a-zA-Z]{3}$")
     private String name;
     @NotNull
     private String description;

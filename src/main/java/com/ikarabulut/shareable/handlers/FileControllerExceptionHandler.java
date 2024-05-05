@@ -1,5 +1,6 @@
 package com.ikarabulut.shareable.handlers;
 
+import com.ikarabulut.shareable.exceptions.FileExtensionNotAllowed;
 import com.ikarabulut.shareable.exceptions.ResourceNotFoundException;
 
 import java.util.Date;
@@ -17,6 +18,16 @@ public class FileControllerExceptionHandler {
     public ErrorMessage resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
         return new ErrorMessage(
                 HttpStatus.NOT_FOUND.value(),
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false));
+    }
+
+    @ExceptionHandler(FileExtensionNotAllowed.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    public ErrorMessage fileExtensionNotAllowed(FileExtensionNotAllowed ex, WebRequest request) {
+        return new ErrorMessage(
+                HttpStatus.NOT_ACCEPTABLE.value(),
                 new Date(),
                 ex.getMessage(),
                 request.getDescription(false));

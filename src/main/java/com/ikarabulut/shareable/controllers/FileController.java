@@ -10,8 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -26,6 +35,31 @@ public class FileController {
         requestHandler.validateFileType(fileModel.getName());
         FileModel createdFile = this.fileRepository.save(fileModel);
         return new ResponseEntity<>(createdFile, HttpStatus.CREATED);
+    }
+
+    @PostMapping(path="/upload")
+    public ResponseEntity<String> uploadFile(@RequestParam("uuid") @Valid UUID uuid, @RequestParam("file") MultipartFile file) throws IOException {
+        Optional<FileModel> fileObj = this.fileRepository.findByUuid(uuid);
+
+        if (fileObj.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        FileModel fileRecord = fileObj.get();
+        String extension = requestHandler.validateFileType(fileRecord.getName());
+
+        var uploadPath = Path.of("upload-store/", file.getOriginalFilename());
+        Files.createDirectories(uploadPath.getParent());
+
+        fileRecord.setExtension(extension);
+        try (var inputStream = file.getInputStream()) {
+            Files.copy(inputStream, uploadPath,
+                    StandardCopyOption.REPLACE_EXISTING
+                    );
+        }
+
+
+        return new ResponseEntity<>("File uploaded", HttpStatus.CREATED);
     }
 
     @GetMapping(path="/files")

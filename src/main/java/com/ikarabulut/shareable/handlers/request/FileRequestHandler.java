@@ -7,12 +7,13 @@ public class FileRequestHandler {
 
     public FileRequestHandler(){}
 
-    public void validateFileType(String fileName){
+    public String validateFileType(String fileName){
         var extensionIndex = fileName.lastIndexOf('.');
         var extension = fileName.substring(extensionIndex);
 
         if (!AllowedFileTypes.isFileTypeAllowed(extension)) {
             throw new FileExtensionNotAllowed(extension + " is not an allowed extension");
         }
+        return extension;
     }
 }

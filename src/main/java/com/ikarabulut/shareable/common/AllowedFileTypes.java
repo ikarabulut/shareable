@@ -1,9 +1,10 @@
 package com.ikarabulut.shareable.common;
 
 public enum AllowedFileTypes {
-    TIF(".tif");
+    TIF(".tif"),
+    PNG(".png");
 
-    private String extension;
+    private final String extension;
     AllowedFileTypes(String extension){
         this.extension = extension;
     }

@@ -23,6 +23,7 @@ public class FileModel {
     private int ownedBy;
     @NotNull
     private String signature;
+    private String extension;
 
 
     public Long getId() { return this.id; }
@@ -43,4 +44,8 @@ public class FileModel {
 
     public String getSignature() { return this.signature; }
     public void setSignature(String signature) { this.signature = signature; }
+
+    public void setExtension(String extension) { this.extension = extension; }
+
+    public String getExtension() { return this.extension; }
 }

@@ -15,7 +15,7 @@ public class FileModel {
     private Long id;
     private final UUID uuid = UUID.randomUUID();
     @NotNull
-    @Pattern(regexp = "^[^.]+\\.[a-zA-Z]{3}$")
+    @Pattern(regexp = "^[a-zA-Z_-]{5,50}\\.[a-zA-Z]{3}$")
     private String name;
     @NotNull
     private String description;

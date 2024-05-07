@@ -53,8 +53,8 @@ public class FileController {
         FileModel fileRecord = fileObj.get();
 
         Tika tika = new Tika();
-        if (AllowedFileTypes.valueOf(fileRecord.getExtension()).equals(tika.detect(file.getBytes()))) {
-            return new ResponseEntity<>("Invalid content type. Expected " + fileRecord.getExtension() + " but got " + tika.detect(file.getBytes()), HttpStatus.BAD_REQUEST);
+        if (!AllowedFileTypes.getByExtension(fileRecord.getExtension()).getMimeType().equals(tika.detect(file.getBytes()))) {
+            return new ResponseEntity<>("Invalid content type. Expected " + AllowedFileTypes.getByExtension(fileRecord.getExtension()) + " but got " + tika.detect(file.getBytes()), HttpStatus.BAD_REQUEST);
         }
 
         var uploadPath = Path.of("upload-store/", file.getOriginalFilename());

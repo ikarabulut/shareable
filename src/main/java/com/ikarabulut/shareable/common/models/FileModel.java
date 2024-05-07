@@ -1,4 +1,4 @@
-package com.ikarabulut.shareable.models;
+package com.ikarabulut.shareable.common.models;
 
 
 import jakarta.persistence.*;

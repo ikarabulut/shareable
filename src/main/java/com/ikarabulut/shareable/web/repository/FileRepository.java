@@ -1,6 +1,6 @@
-package com.ikarabulut.shareable.repository;
+package com.ikarabulut.shareable.web.repository;
 
-import com.ikarabulut.shareable.models.FileModel;
+import com.ikarabulut.shareable.common.models.FileModel;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

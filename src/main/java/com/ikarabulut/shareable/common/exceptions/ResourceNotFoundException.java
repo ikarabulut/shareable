@@ -1,4 +1,4 @@
-package com.ikarabulut.shareable.exceptions;
+package com.ikarabulut.shareable.common.exceptions;
 
 import java.io.Serial;
 

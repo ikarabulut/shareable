@@ -1,7 +1,7 @@
-package com.ikarabulut.shareable.handlers.request;
+package com.ikarabulut.shareable.web.handlers.request;
 
 import com.ikarabulut.shareable.common.AllowedFileTypes;
-import com.ikarabulut.shareable.exceptions.FileExtensionNotAllowed;
+import com.ikarabulut.shareable.common.exceptions.FileExtensionNotAllowed;
 
 public class FileRequestHandler {
 

@@ -1,9 +1,9 @@
-package com.ikarabulut.shareable.controllers;
+package com.ikarabulut.shareable.web.controllers;
 
-import com.ikarabulut.shareable.exceptions.ResourceNotFoundException;
-import com.ikarabulut.shareable.handlers.request.FileRequestHandler;
-import com.ikarabulut.shareable.models.FileModel;
-import com.ikarabulut.shareable.repository.FileRepository;
+import com.ikarabulut.shareable.common.exceptions.ResourceNotFoundException;
+import com.ikarabulut.shareable.web.handlers.request.FileRequestHandler;
+import com.ikarabulut.shareable.common.models.FileModel;
+import com.ikarabulut.shareable.web.repository.FileRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,12 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.UUID;

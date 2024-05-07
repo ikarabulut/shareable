@@ -1,4 +1,4 @@
-package com.ikarabulut.shareable.handlers;
+package com.ikarabulut.shareable.web.handlers.error;
 import java.util.Date;
 
 public class ErrorMessage {

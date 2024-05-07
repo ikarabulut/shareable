@@ -1,10 +1,12 @@
 package com.ikarabulut.shareable.web.controllers;
 
+import com.ikarabulut.shareable.common.AllowedFileTypes;
+import com.ikarabulut.shareable.common.exceptions.FileExtensionNotAllowed;
 import com.ikarabulut.shareable.common.exceptions.ResourceNotFoundException;
-import com.ikarabulut.shareable.web.handlers.request.FileRequestHandler;
 import com.ikarabulut.shareable.common.models.FileModel;
 import com.ikarabulut.shareable.web.repository.FileRepository;
 import jakarta.validation.Valid;
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -25,17 +27,23 @@ public class FileController {
 
     @Autowired
     private FileRepository fileRepository;
-    private final FileRequestHandler requestHandler = new FileRequestHandler();
 
-    @PostMapping(path="/files")
+    @PostMapping(path="/file")
     public ResponseEntity<FileModel> createFile(@RequestBody @Valid FileModel fileModel) {
-        requestHandler.validateFileType(fileModel.getName());
+        var extensionIndex = fileModel.getName().lastIndexOf('.');
+        var extension = fileModel.getName().substring(extensionIndex);
+        if (!AllowedFileTypes.isFileTypeAllowed(extension)) {
+            throw new FileExtensionNotAllowed(extension + " is not an allowed extension");
+        }
+
+        fileModel.setExtension(extension);
         FileModel createdFile = this.fileRepository.save(fileModel);
+
         return new ResponseEntity<>(createdFile, HttpStatus.CREATED);
     }
 
-    @PostMapping(path="/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("uuid") @Valid UUID uuid, @RequestParam("file") MultipartFile file) throws IOException {
+    @PostMapping(path="/file/{uuid}/upload")
+    public ResponseEntity<String> uploadFile(@PathVariable("uuid") @Valid UUID uuid, @RequestParam("file") MultipartFile file) throws IOException {
         Optional<FileModel> fileObj = this.fileRepository.findByUuid(uuid);
 
         if (fileObj.isEmpty()) {
@@ -43,35 +51,36 @@ public class FileController {
         }
 
         FileModel fileRecord = fileObj.get();
-        String extension = requestHandler.validateFileType(fileRecord.getName());
+
+        Tika tika = new Tika();
+        if (AllowedFileTypes.valueOf(fileRecord.getExtension()).equals(tika.detect(file.getBytes()))) {
+            return new ResponseEntity<>("Invalid content type. Expected " + fileRecord.getExtension() + " but got " + tika.detect(file.getBytes()), HttpStatus.BAD_REQUEST);
+        }
 
         var uploadPath = Path.of("upload-store/", file.getOriginalFilename());
         Files.createDirectories(uploadPath.getParent());
-
-        fileRecord.setExtension(extension);
         try (var inputStream = file.getInputStream()) {
             Files.copy(inputStream, uploadPath,
                     StandardCopyOption.REPLACE_EXISTING
                     );
         }
 
-
         return new ResponseEntity<>("File uploaded", HttpStatus.CREATED);
     }
 
-    @GetMapping(path="/files")
+    @GetMapping(path="/file/all")
     public ResponseEntity<Iterable<FileModel>> listFiles() {
         Iterable<FileModel> files = this.fileRepository.findAll();
         return new ResponseEntity<>(files, HttpStatus.OK);
     }
 
-    @GetMapping(path="/files/{id}")
+    @GetMapping(path="/file/{id}")
     public ResponseEntity<FileModel> listFile(@PathVariable("id") @Valid Long id) {
         FileModel file = this.fileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No file found with Id: " + id));
         return new ResponseEntity<>(file, HttpStatus.OK);
     }
 
-    @DeleteMapping(path="/files/{id}")
+    @DeleteMapping(path="/file/{id}")
     public ResponseEntity<FileModel> deleteFile(@PathVariable("id") @Valid Long id) {
         Optional<FileModel> fileObj = this.fileRepository.findById(id);
 

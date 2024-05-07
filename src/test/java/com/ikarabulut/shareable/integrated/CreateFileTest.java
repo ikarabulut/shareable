@@ -37,7 +37,7 @@ class CreateFileTest {
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
         Mockito.when(fileRepository.save(requestModel)).thenReturn(requestModel);
-        var request = MockMvcRequestBuilders.post("/files")
+        var request = MockMvcRequestBuilders.post("/file")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(bodyContent);
@@ -56,7 +56,7 @@ class CreateFileTest {
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
         Mockito.when(fileRepository.save(requestModel)).thenReturn(requestModel);
-        var request = MockMvcRequestBuilders.post("/files")
+        var request = MockMvcRequestBuilders.post("/file")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(bodyContent);
@@ -75,7 +75,7 @@ class CreateFileTest {
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
         Mockito.when(fileRepository.save(requestModel)).thenReturn(requestModel);
-        var request = MockMvcRequestBuilders.post("/files")
+        var request = MockMvcRequestBuilders.post("/file")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(bodyContent);
@@ -94,7 +94,7 @@ class CreateFileTest {
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
         Mockito.when(fileRepository.save(requestModel)).thenReturn(requestModel);
-        var request = MockMvcRequestBuilders.post("/files")
+        var request = MockMvcRequestBuilders.post("/file")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(bodyContent);

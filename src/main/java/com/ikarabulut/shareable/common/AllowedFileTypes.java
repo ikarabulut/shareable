@@ -5,6 +5,7 @@ import org.springframework.util.MimeType;
 public enum AllowedFileTypes {
     TIF(".tif", "image/tiff"),
     PNG(".png", "image/png"),
+    TXT(".txt", "text/plain"),
     NONE(".none", "none/none");
 
     private final String extension;

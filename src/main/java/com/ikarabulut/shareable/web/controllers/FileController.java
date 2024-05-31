@@ -4,6 +4,7 @@ import com.ikarabulut.shareable.common.AllowedFileTypes;
 import com.ikarabulut.shareable.common.exceptions.FileExtensionNotAllowed;
 import com.ikarabulut.shareable.common.exceptions.ResourceNotFoundException;
 import com.ikarabulut.shareable.common.models.FileModel;
+import com.ikarabulut.shareable.service.CloudStorageService;
 import com.ikarabulut.shareable.web.repository.FileRepository;
 import jakarta.validation.Valid;
 import org.apache.tika.Tika;
@@ -27,6 +28,8 @@ public class FileController {
 
     @Autowired
     private FileRepository fileRepository;
+    @Autowired
+    private CloudStorageService cloudStorageService;
 
     @PostMapping(path="/file")
     public ResponseEntity<FileModel> createFile(@RequestBody @Valid FileModel fileModel) {
@@ -57,15 +60,9 @@ public class FileController {
             return new ResponseEntity<>("Invalid content type. Expected " + AllowedFileTypes.getByExtension(fileRecord.getExtension()) + " but got " + tika.detect(file.getBytes()), HttpStatus.BAD_REQUEST);
         }
 
-        var uploadPath = Path.of("upload-store/", file.getOriginalFilename());
-        Files.createDirectories(uploadPath.getParent());
-        try (var inputStream = file.getInputStream()) {
-            Files.copy(inputStream, uploadPath,
-                    StandardCopyOption.REPLACE_EXISTING
-                    );
-        }
+        var response = cloudStorageService.uploadFileToBucket(fileRecord.getName(), file);
 
-        return new ResponseEntity<>("File uploaded", HttpStatus.CREATED);
+        return new ResponseEntity<>("File uploaded:: " + response, HttpStatus.CREATED);
     }
 
     @GetMapping(path="/file/all")

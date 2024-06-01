@@ -1,11 +1,15 @@
 package com.ikarabulut.shareable.account.controller;
 
 import com.ikarabulut.shareable.account.UserRepository;
+import com.ikarabulut.shareable.account.common.LoginModel;
+import com.ikarabulut.shareable.account.common.SessionModel;
 import com.ikarabulut.shareable.account.common.UserModel;
+import com.ikarabulut.shareable.account.common.exceptions.WrongPasswordException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -36,5 +40,17 @@ public class UserController {
         UserModel user = this.userRepository.findByUuid(uuid).orElseThrow();
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping(path="/user/login")
+    public ResponseEntity<SessionModel> login(@RequestBody @Valid LoginModel loginInfo) {
+        UserModel user = this.userRepository.findByEmail(loginInfo.getEmail()).orElseThrow();
+
+        if(!BCrypt.checkpw(loginInfo.getPassword(), user.getPassword())){
+            throw new WrongPasswordException("The Password you entered is incorrect");
+        }
+
+        var session = new SessionModel();
+        return new ResponseEntity<SessionModel>(session, HttpStatus.OK);
     }
 }

@@ -1,7 +1,9 @@
 package com.ikarabulut.shareable.account.common;
 
+import com.ikarabulut.shareable.account.common.exceptions.InvalidPasswordException;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ public class UserModel {
     private String email;
     private String phone;
     private String tag;
+    private String password;
 
     public Long getId() {
         return id;
@@ -71,6 +74,17 @@ public class UserModel {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public void setPassword(String password) {
+        if (!password.matches("^(?=.*[!_*]).{8,16}$")) {
+            throw new InvalidPasswordException("Password must be at least 8-16 characters and contain 1 special character (!, _, *)");
+        }
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 }
 

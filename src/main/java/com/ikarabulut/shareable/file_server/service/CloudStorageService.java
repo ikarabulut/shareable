@@ -1,6 +1,6 @@
-package com.ikarabulut.shareable.service;
+package com.ikarabulut.shareable.file_server.service;
 
-import com.ikarabulut.shareable.common.dependency.DependencyFactory;
+import com.ikarabulut.shareable.file_server.common.dependency.DependencyFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.awscore.exception.AwsServiceException;

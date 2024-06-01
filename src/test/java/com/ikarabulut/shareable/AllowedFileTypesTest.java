@@ -1,6 +1,6 @@
 package com.ikarabulut.shareable;
 
-import com.ikarabulut.shareable.common.AllowedFileTypes;
+import com.ikarabulut.shareable.file_server.common.AllowedFileTypes;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

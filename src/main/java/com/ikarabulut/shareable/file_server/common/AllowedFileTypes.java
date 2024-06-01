@@ -1,6 +1,4 @@
-package com.ikarabulut.shareable.common;
-
-import org.springframework.util.MimeType;
+package com.ikarabulut.shareable.file_server.common;
 
 public enum AllowedFileTypes {
     TIF(".tif", "image/tiff"),

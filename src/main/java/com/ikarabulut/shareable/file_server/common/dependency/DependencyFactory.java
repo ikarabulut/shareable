@@ -1,4 +1,4 @@
-package com.ikarabulut.shareable.common.dependency;
+package com.ikarabulut.shareable.file_server.common.dependency;
 
 import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.services.s3.S3Client;

@@ -2,9 +2,9 @@ package com.ikarabulut.shareable.integrated;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.ikarabulut.shareable.web.controllers.FileController;
-import com.ikarabulut.shareable.common.models.FileModel;
-import com.ikarabulut.shareable.web.repository.FileRepository;
+import com.ikarabulut.shareable.file_server.web.controllers.FileController;
+import com.ikarabulut.shareable.file_server.common.models.FileModel;
+import com.ikarabulut.shareable.file_server.web.repository.FileRepository;
 
 import org.junit.jupiter.api.Test;
 

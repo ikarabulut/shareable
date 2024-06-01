@@ -1,7 +1,7 @@
-package com.ikarabulut.shareable.web.handlers.error;
+package com.ikarabulut.shareable.file_server.web.handlers.error;
 
-import com.ikarabulut.shareable.common.exceptions.FileExtensionNotAllowed;
-import com.ikarabulut.shareable.common.exceptions.ResourceNotFoundException;
+import com.ikarabulut.shareable.file_server.common.exceptions.FileExtensionNotAllowed;
+import com.ikarabulut.shareable.file_server.common.exceptions.ResourceNotFoundException;
 
 import java.util.Date;
 

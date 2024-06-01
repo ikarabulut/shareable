@@ -1,11 +1,11 @@
-package com.ikarabulut.shareable.web.controllers;
+package com.ikarabulut.shareable.file_server.web.controllers;
 
-import com.ikarabulut.shareable.common.AllowedFileTypes;
-import com.ikarabulut.shareable.common.exceptions.FileExtensionNotAllowed;
-import com.ikarabulut.shareable.common.exceptions.ResourceNotFoundException;
-import com.ikarabulut.shareable.common.models.FileModel;
-import com.ikarabulut.shareable.service.CloudStorageService;
-import com.ikarabulut.shareable.web.repository.FileRepository;
+import com.ikarabulut.shareable.file_server.common.AllowedFileTypes;
+import com.ikarabulut.shareable.file_server.common.exceptions.FileExtensionNotAllowed;
+import com.ikarabulut.shareable.file_server.common.exceptions.ResourceNotFoundException;
+import com.ikarabulut.shareable.file_server.common.models.FileModel;
+import com.ikarabulut.shareable.file_server.service.CloudStorageService;
+import com.ikarabulut.shareable.file_server.web.repository.FileRepository;
 import jakarta.validation.Valid;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.UUID;
 

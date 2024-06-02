@@ -1,8 +1,10 @@
 package com.ikarabulut.shareable.account.controller;
 
+import com.ikarabulut.shareable.account.CryptographyService;
 import com.ikarabulut.shareable.account.UserRepository;
 import com.ikarabulut.shareable.account.common.LoginModel;
 import com.ikarabulut.shareable.account.common.SessionModel;
+import com.ikarabulut.shareable.account.SessionService;
 import com.ikarabulut.shareable.account.common.UserModel;
 import com.ikarabulut.shareable.account.common.exceptions.WrongPasswordException;
 import jakarta.validation.Valid;
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.UUID;
 
 @RestController
@@ -20,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CryptographyService cryptoService;
 
     @PostMapping(path="/user")
     public ResponseEntity<UserModel> createUser(@RequestBody @Valid UserModel userModel) {
@@ -50,7 +55,8 @@ public class UserController {
             throw new WrongPasswordException("The Password you entered is incorrect");
         }
 
-        var session = new SessionModel();
-        return new ResponseEntity<SessionModel>(session, HttpStatus.OK);
+        var sessionService = new SessionService(cryptoService, user);
+        var session = sessionService.createSession(new Date());
+        return new ResponseEntity<>(session, HttpStatus.OK);
     }
 }

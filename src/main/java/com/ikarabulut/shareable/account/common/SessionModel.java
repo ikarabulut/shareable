@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class SessionModel {
     private String Jwt;
-    private String createdAt = new Date().toString();
+    private String createdAt;
     private UUID userId;
 
     public String getJwt() {
@@ -26,5 +26,9 @@ public class SessionModel {
 
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

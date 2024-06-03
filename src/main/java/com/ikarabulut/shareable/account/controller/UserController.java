@@ -49,7 +49,7 @@ public class UserController {
 
     @GetMapping(path="/user/login")
     public ResponseEntity<SessionModel> login(@RequestBody @Valid LoginModel loginInfo) {
-        UserModel user = this.userRepository.findByEmail(loginInfo.getEmail()).orElseThrow();
+        UserModel user = this.userRepository.findByUsername(loginInfo.getUsername()).orElseThrow();
 
         if(!BCrypt.checkpw(loginInfo.getPassword(), user.getPassword())){
             throw new WrongPasswordException("The Password you entered is incorrect");

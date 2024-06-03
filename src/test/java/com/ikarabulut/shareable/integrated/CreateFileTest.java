@@ -32,7 +32,7 @@ class CreateFileTest {
         var requestModel = new FileModel();
         requestModel.setName("validName.tif");
         requestModel.setSignature("alkjlk");
-        requestModel.setOwnedBy(1);
+        requestModel.setOwnedBy("user");
         requestModel.setDescription("aaah but they dont hear me though");
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
@@ -51,7 +51,7 @@ class CreateFileTest {
         var requestModel = new FileModel();
         requestModel.setName("validName.bad");
         requestModel.setSignature("alkjlk");
-        requestModel.setOwnedBy(1);
+        requestModel.setOwnedBy("user");
         requestModel.setDescription("aaah but they dont hear me though");
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
@@ -70,7 +70,7 @@ class CreateFileTest {
         var requestModel = new FileModel();
         requestModel.setName("validName.php%00.tif");
         requestModel.setSignature("alkjlk");
-        requestModel.setOwnedBy(1);
+        requestModel.setOwnedBy("user");
         requestModel.setDescription("aaah but they dont hear me though");
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);
@@ -89,7 +89,7 @@ class CreateFileTest {
         var requestModel = new FileModel();
         requestModel.setName("validName.jpg.php");
         requestModel.setSignature("alkjlk");
-        requestModel.setOwnedBy(1);
+        requestModel.setOwnedBy("user");
         requestModel.setDescription("aaah but they dont hear me though");
         requestModel.setIsMalware(false);
         var bodyContent = objectWriter.writeValueAsString(requestModel);

@@ -20,8 +20,7 @@ public class FileModel {
     @NotNull
     private String description;
     private Boolean isMalware;
-    private int ownedBy;
-    @NotNull
+    private String ownedBy;
     private String signature;
     private String extension;
 
@@ -39,8 +38,8 @@ public class FileModel {
     public Boolean getIsMalware() { return this.isMalware; }
     public void setIsMalware(Boolean isMalware) { this.isMalware = isMalware; }
 
-    public int getOwnedBy() { return this.ownedBy; }
-    public void setOwnedBy(int ownedBy) { this.ownedBy = ownedBy; }
+    public String getOwnedBy() { return this.ownedBy; }
+    public void setOwnedBy(String ownedBy) { this.ownedBy = ownedBy; }
 
     public String getSignature() { return this.signature; }
     public void setSignature(String signature) { this.signature = signature; }

@@ -8,13 +8,14 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import java.util.UUID;
 
 @Entity
-@Table(name = "USERS")
+@Table(name = "USERS", uniqueConstraints = {@UniqueConstraint(columnNames = {"email" , "username"})})
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", updatable = false, nullable = false, insertable = false, unique = true)
     private Long id;
     private final UUID uuid = UUID.randomUUID();
+    private String username;
     @NotNull
     private String firstName;
     @NotNull
@@ -85,6 +86,14 @@ public class UserModel {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 
